@@ -1,19 +1,28 @@
+import { supabase } from '../supabase'
+
 export default defineEventHandler(async () => {
-	// Check if Supabase is configured
-	if (!process.env.SUPABASE_URL || !process.env.SUPABASE_KEY) {
+	try {
+		// Make a fetch to Supabase to get data
+		const { data, error } = await supabase
+			.from('my_table')
+			.select()
+		
+		if (error) {
+			console.warn('Supabase query error (expected for demo):', error.message);
+			return { 
+				data: null, 
+				error: null,
+				message: 'Demo mode: Create a table named "my_table" in your Supabase database to see data here.' 
+			};
+		}
+		
+		return { data, error };
+	} catch (err) {
+		console.warn('Supabase connection error (expected for demo):', err);
 		return { 
 			data: null, 
 			error: null,
-			message: 'Supabase not configured. Add SUPABASE_URL and SUPABASE_KEY to .env file if you want to use Supabase.' 
+			message: 'Demo mode: Update .env with your real Supabase credentials to connect to your database.' 
 		};
 	}
-
-	// Import here to avoid issues when Supabase is not configured
-	const { supabase } = await import('../supabase');
-	
-	// Make a fetch to Supabase to get data
-	const { data, error } = await supabase
-		.from('my_table')
-		.select()
-	return { data, error };
 })

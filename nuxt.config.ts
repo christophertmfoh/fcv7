@@ -8,7 +8,7 @@ export default defineNuxtConfig({
 		},
 	},
 	modules: [
-		// "nuxt-security", // Temporarily disabled due to initialization error
+		"nuxt-security",
 		"@nuxtjs/tailwindcss",
 		"shadcn-nuxt",
 		"@nuxtjs/color-mode",
@@ -22,9 +22,9 @@ export default defineNuxtConfig({
 		classSuffix: '',
 		preference: 'dark'
 	},
-	// security: {
-	// 	headers: {
-	// 		crossOriginEmbedderPolicy: process.env.NODE_ENV === 'development' ? 'unsafe-none' : 'require-corp',
-	// 	},
-	// },
+	security: {
+		headers: {
+			crossOriginEmbedderPolicy: process.env.NODE_ENV === 'development' ? 'unsafe-none' : 'require-corp',
+		},
+	},
 })
